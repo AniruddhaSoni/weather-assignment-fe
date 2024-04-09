@@ -12,6 +12,8 @@ import IconSnow from "./icons/IconSnow";
 
 import socketIOClient from "socket.io-client";
 
+const url = process.env.BACKEND_URL || "http://localhost:3001";
+
 interface Location {
   name: string;
   latitude: number;
@@ -46,9 +48,7 @@ export default function WeatherScreen() {
   const [location, setLocation] = React.useState<Location | null>(null);
   const [weatherData, setWeatherData] = React.useState<any | null>(null);
 
-  const socket = socketIOClient(
-    process.env.BACKEND_URL || "http://localhost:3001"
-  );
+  const socket = socketIOClient(url);
 
   useEffect(() => {
     socket.on("connect", () => {
@@ -63,19 +63,16 @@ export default function WeatherScreen() {
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(async (position) => {
-      const req = await fetch(
-        `${process.env.BACKEND_URL || "http://localhost:3001"}/api/weather`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          }),
-        }
-      );
+      const req = await fetch(`${url}/api/weather`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        }),
+      });
 
       const response = await req.json();
       const weatherData = response.weatherData;

@@ -9,10 +9,7 @@ import IconCloud from "./icons/IconCloud";
 import IconRain from "./icons/IconRain";
 import IconCloudSunRain from "./icons/IconCloudSunRain";
 import IconSnow from "./icons/IconSnow";
-
 import socketIOClient from "socket.io-client";
-
-const url = process.env.BACKEND_URL ?? "http://localhost:3001";
 
 interface Location {
   name: string;
@@ -45,6 +42,10 @@ const IconCollection: WeatherIcons = {
 };
 
 export default function WeatherScreen() {
+  const url = "https://weather-assignment-be.vercel.app";
+
+  console.log(url);
+
   const [location, setLocation] = React.useState<Location | null>(null);
   const [weatherData, setWeatherData] = React.useState<any | null>(null);
 

@@ -12,7 +12,7 @@ import IconSnow from "./icons/IconSnow";
 
 import socketIOClient from "socket.io-client";
 
-const url = process.env.BACKEND_URL || "http://localhost:3001";
+const url = process.env.BACKEND_URL ?? "http://localhost:3001";
 
 interface Location {
   name: string;
